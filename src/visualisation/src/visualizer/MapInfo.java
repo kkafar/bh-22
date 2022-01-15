@@ -9,16 +9,16 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MapInfo {
 
-    public Point upperLeft = new Point(0, 0);
-    public Point lowerRight = new Point(1000, 600);
+    public Point upperRight = new Point(0, 0);
+    public Point lowerLeft = new Point(1000, 600);
 
     private URL url;
-    private int [][] map;
+    private double [][] map;
+    private ArrayList<Point> sensors = new ArrayList<>();
 
     private final int clientID = 1;
     private final int mapID = 1;
@@ -32,15 +32,6 @@ public class MapInfo {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        map = new int[][]{
-                {-1, -1, 0, 0, 2, 0, 0, 0, 0, 0},
-                {-1, -1, 0, 2, 3, 2, 0, 0, 0, 0},
-                {0, 0, 0, 2, 3, 4, 3, 2, 0, 0},
-                {0, 0, 1, 0, 2, 3, 2, 0, 0, 0},
-                {0, 0, 0, 0, 0, 2, 0, 0, -1, -1},
-                {0, 0, 1, 0, 0, 0, 0, 0, -1, -1}
-        };
     }
 
     private void connect() throws IOException{
@@ -65,12 +56,24 @@ public class MapInfo {
         String response = new String(bytes, StandardCharsets.UTF_8);
 
         ResponseJson responseJson = gson.fromJson(response, ResponseJson.class);
-        System.out.println(responseJson.data);
+
+        System.out.println(responseJson);
+        map = responseJson.heatMap;
+        lowerLeft = new Point(responseJson.lowerLeft[0], responseJson.lowerLeft[1]);
+        upperRight = new Point(responseJson.upperRight[0], responseJson.upperRight[1]);
+
+        System.out.println(lowerLeft);
+        System.out.println(upperRight);
+
+        double[][] sensorArray = responseJson.sensors;
+        for (int i = 0; i < sensorArray.length; i++){
+            sensors.add(new Point(sensorArray[i][0], sensorArray[i][1]));
+        }
     }
 
     public Point translate(Point point, int mapWidth, int mapHeight){
-        int translatedX = (int)(point.x/(lowerRight.x - upperLeft.x)*mapWidth);
-        int translatedY = (int)(point.y/(lowerRight.y - upperLeft.y)*mapHeight);
+        int translatedX = (int)((point.x - lowerLeft.x)/(upperRight.x - lowerLeft.x)*mapWidth);
+        int translatedY = (int)((point.y - lowerLeft.y)/(upperRight.y - lowerLeft.y)*mapHeight);
 
         return new Point(translatedX, translatedY);
     }
@@ -84,20 +87,14 @@ public class MapInfo {
     }
 
     public ArrayList<Point> getSensors(){
-        ArrayList<Point> points =  new ArrayList<Point>(List.of(new Point[]{
-                new Point(100, 200),
-                new Point(400, 500),
-                new Point(300, 200)
-        }));
-
-        return points;
+        return sensors;
     }
 
-    public int [][] getHeatMap(){
+    public double [][] getHeatMap(){
         return map;
     }
 
     public Point getTractorPosition(){
-        return new Point(500, 300);
+        return new Point(63, 45);
     }
 }
