@@ -30,7 +30,7 @@ def main():
     weather_info = weather_provider.get_info(map_info['vertices'][0])
 
     # odpalam na nich logikę biznesową
-    heat_map, (lower_left, upper_right) = CreateHeatmap(100, map_info | weather_info).generate_heatmap()
+    heat_map, (lower_left, upper_right) = CreateHeatmap(30, map_info | weather_info).generate_heatmap()
 
     # dostaję jakiś wynik i potrzebuję przerobić go na jsona
 

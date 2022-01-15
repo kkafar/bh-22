@@ -1,5 +1,8 @@
 import numpy as np
 
+import weatherinfo as wi
+import mapinfo as mi
+
 
 #data - słownik:
 # 'map' - lista wierzchołków
@@ -46,7 +49,7 @@ class CreateHeatmap:
             for j in range (self.size[1]):
                 value = 0
                 weights_sum = 0
-                point = ((i+0.5) * width_area, (j+0.5) * height_area)
+                point = (left_down[0] + (i+0.5) * width_area, left_down[1] + (j+0.5) * height_area)
                 for (coor_x, coor_y), v in zip(self.data['sensors'], self.data['readings']):
                     w = self.weight(point, (coor_x, coor_y))
                     weights_sum += w
@@ -54,7 +57,7 @@ class CreateHeatmap:
                 self.sensors_value[i, j] = value / weights_sum
 
     def function(self, k):
-        return min(k**2 / 10, 100)
+        return min(k**2 / 30, 100)
 
     def point_in_area(self, x, y):
         count = 0
@@ -90,7 +93,7 @@ class CreateHeatmap:
         height_area = (right_up[1] - left_down[1]) / self.size[1]
         for i in range(self.size[0]):
             for j in range(self.size[1]):
-                point = ((i+0.5) * width_area, (j+0.5) * height_area)
+                point = (left_down[0] + (i+0.5) * width_area, left_down[1] + (j+0.5) * height_area)
                 if not self.point_in_area(*point):
                     self.heatmap[i, j] = -1
 
@@ -101,8 +104,12 @@ class CreateHeatmap:
         return self.heatmap, self.map.rectangle
 
 if __name__ == '__main__':
-    ch = CreateHeatmap(10)
-    heatmap = ch.generate_heatmap()
+    weather_provider = wi.WeatherInfoProvider()
+    map_info_provider = mi.MapInfoProvider()
+    map_info = map_info_provider.get_info(str(1), str(1))
+    weather_info = weather_provider.get_info(map_info['vertices'][0])
+    ch = CreateHeatmap(100, map_info | weather_info)
+    heatmap, _ = ch.generate_heatmap()
     for i in range (10):
         for j in range (10):
             print (int(heatmap[i, j]), end="  ")
