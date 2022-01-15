@@ -26,7 +26,6 @@ public class MapInfo {
     private final Gson gson = new Gson();
 
     public MapInfo() {
-
         try {
             connect();
         } catch (IOException e) {
@@ -38,26 +37,27 @@ public class MapInfo {
         url = new URL("http://10.230.128.212:5000");
 
         URLConnection con = url.openConnection();
-        HttpURLConnection http = (HttpURLConnection)con;
-        http.setRequestMethod("POST");
-        http.setDoOutput(true);
+        HttpURLConnection httpConnection = (HttpURLConnection)con;
+        httpConnection.setRequestMethod("POST");
+        httpConnection.setDoOutput(true);
 
         byte[] out = ("{\"clientId\":\"" + clientID + "\",\"mapId\":\"" + mapID +"\"}").getBytes(StandardCharsets.UTF_8);
         int length = out.length;
 
-        http.setFixedLengthStreamingMode(length);
-        http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-        http.connect();
-        try(OutputStream os = http.getOutputStream()) {
+        httpConnection.setFixedLengthStreamingMode(length);
+        httpConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+        httpConnection.connect();
+
+        try (OutputStream os = httpConnection.getOutputStream()) {
             os.write(out);
         }
 
-        byte[] bytes = http.getInputStream().readAllBytes();
+        byte[] bytes = httpConnection.getInputStream().readAllBytes();
         String response = new String(bytes, StandardCharsets.UTF_8);
 
         ResponseJson responseJson = gson.fromJson(response, ResponseJson.class);
-
         System.out.println(responseJson);
+
         map = responseJson.heatMap;
         lowerLeft = new Point(responseJson.lowerLeft[0], responseJson.lowerLeft[1]);
         upperRight = new Point(responseJson.upperRight[0], responseJson.upperRight[1]);

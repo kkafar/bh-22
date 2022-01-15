@@ -6,7 +6,7 @@ import mapinfo as mi
 
 class Map:
     def __init__(self, vertices):
-        self.vertices = np.array(vertices)
+        self.vertices = np.array(vertices, dtype=np.float64)
         left_down = (min(self.vertices[:, 0]), min(self.vertices[:, 1]))
         right_up = (max(self.vertices[:, 0]), max(self.vertices[:, 1]))
         self.rectangle = (left_down, right_up)
@@ -24,8 +24,8 @@ class CreateHeatmap:
         if isinstance(size, int):
             size = (size, size)
         self.size = size
-        self.heatmap = np.zeros(size)
-        self.sensors_value = np.zeros(size)
+        self.heatmap = np.zeros(size, dtype=np.float64)
+        self.sensors_value = np.zeros(size, dtype=np.float64)
         self.map = Map(self.data['vertices'])
 
     def weight(self, point_a, point_b):
