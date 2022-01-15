@@ -28,10 +28,8 @@ def main():
     # najpierw trzeba zaciągnąć dane z bazy danych
     map_info = map_info_provider.get_info(received_request['clientId'], received_request['mapId'])
     weather_info = weather_provider.get_info(map_info['vertices'][0])
-
     # odpalam na nich logikę biznesową
     heat_map, (lower_left, upper_right) = CreateHeatmap(30, map_info | weather_info).generate_heatmap()
-
     # dostaję jakiś wynik i potrzebuję przerobić go na jsona
 
     # uzyskanego jsona przesyłam jako odpowiedź
