@@ -32,3 +32,8 @@ Prognoza pogody (deszcz, wiatr)
 2. Baza danych (MongoDB albo SQL) postawiony na legionie. (trzymamy tylko n (100) ostatnich pomiarów z czujnika).
 3. Generator: Python
 4. Logika biznesowa: Python
+
+
+# Kierunki rozwoju
+
+1. Podczas listowania pól pojawia się informacja czy na dane ole powinniśmy dziś wyjechać, czy dopiero później na podstawie poziomu insektów oraz prognozy pogody.  

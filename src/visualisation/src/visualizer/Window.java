@@ -15,7 +15,7 @@ public class Window extends JFrame {
     public final int width = 1000;
     public final int height = 800;
 
-    public static void main(String[]  args) throws IOException {
+    public static void main(String[]  args) {
         new Window();
     }
 
