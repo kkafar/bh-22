@@ -24,6 +24,7 @@ public class MapPanel extends JPanel implements ActionListener {
 
     private final MapInfo mapInfo = new MapInfo();
     private final int[][] heatMap = mapInfo.getHeatMap();
+    private int maxValue;
 
     public MapPanel(int width, int height){
 
@@ -32,6 +33,14 @@ public class MapPanel extends JPanel implements ActionListener {
 
         squareHeight = height/heatMap.length;
         squareWidth = width/heatMap[0].length;
+
+        maxValue = -1;
+
+        for (int i = 0; i < heatMap.length; i++){
+            for (int j = 0; j < heatMap[0].length; j++){
+                maxValue = Math.max(maxValue, heatMap[i][j]);
+            }
+        }
 
         setBounds(0, 0, width, height);
         setPreferredSize(new Dimension(width, height));
@@ -71,8 +80,7 @@ public class MapPanel extends JPanel implements ActionListener {
             for (int i = 0; i < heatMap.length; i++) {
                 for (int j = 0; j < heatMap[0].length; j++) {
                     if (heatMap[i][j] < 0) continue;
-
-                    g2D.setPaint(new Color(0, heatMap[i][j] * 30, 0));
+                    g2D.setPaint(getHeatHue(heatMap[i][j]));
                     g2D.fillRect(j * squareWidth, i * squareHeight, squareWidth, squareHeight);
                 }
             }
@@ -98,6 +106,12 @@ public class MapPanel extends JPanel implements ActionListener {
         if (tractorPos != null){
             g2D.drawImage(tractorImage, (int)(tractorPos.x - tractorSize/2), (int)(tractorPos.y - tractorSize/2), tractorSize, tractorSize, null,this);
         }
+    }
+
+    private Color getHeatHue(int value){
+        Color color = Color.getHSBColor(225, (float)value/(float)maxValue*100, 100);
+        System.out.println(color);
+        return Color.getHSBColor((float)(225./360.), (float)value/(float)maxValue, 1);
     }
 
     @Override
