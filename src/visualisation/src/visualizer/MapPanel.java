@@ -16,6 +16,9 @@ public class MapPanel extends JPanel implements ActionListener {
     private int squareWidth;
     private int squareHeight;
 
+    private final int tractorSize = 50;
+    private final Image tractorImage = new ImageIcon("pics/tractor.png").getImage().getScaledInstance(tractorSize, tractorSize, Image.SCALE_DEFAULT);
+
     private final Timer timer;
     private boolean heatMapShowing = false;
 
@@ -51,16 +54,8 @@ public class MapPanel extends JPanel implements ActionListener {
         super.repaint();
 
         // background
-        g2D.setPaint(new Color(236, 195, 161));
+        g2D.setPaint(new Color(88, 92, 107));
         g2D.fillRect(0, 0, this.width, this.height);
-
-
-        // sensors
-        g2D.setPaint(new Color(0, 220, 206));
-        ArrayList<Point> sensors = mapInfo.getSensors();
-        for (Point sensor: sensors){
-            g2D.fillOval((int)sensor.x, (int)sensor.y, 10, 10);
-        }
 
         // map
         for (int i = 0; i < heatMap.length; i++){
@@ -77,10 +72,31 @@ public class MapPanel extends JPanel implements ActionListener {
                 for (int j = 0; j < heatMap[0].length; j++) {
                     if (heatMap[i][j] < 0) continue;
 
-                    g2D.setPaint(new Color(0, heatMap[i][j] * 30, 0, 100));
+                    g2D.setPaint(new Color(0, heatMap[i][j] * 30, 0));
                     g2D.fillRect(j * squareWidth, i * squareHeight, squareWidth, squareHeight);
                 }
             }
+        }
+
+        // grid
+        g2D.setPaint(new Color(225, 217, 217));
+        for (int i = 0; i < heatMap.length; i++){
+            for (int j = 0; j < heatMap[0].length; j++){
+                g2D.drawRect(j*squareWidth, i*squareHeight, squareWidth, squareHeight);
+            }
+        }
+
+        // sensors
+        g2D.setPaint(new Color(21, 36, 143));
+        ArrayList<Point> sensors = mapInfo.getSensors();
+        for (Point sensor: sensors){
+            g2D.fillOval((int)sensor.x, (int)sensor.y, 12, 12);
+        }
+
+        //tractor
+        Point tractorPos = mapInfo.getTractorPosition();
+        if (tractorPos != null){
+            g2D.drawImage(tractorImage, (int)(tractorPos.x - tractorSize/2), (int)(tractorPos.y - tractorSize/2), tractorSize, tractorSize, null,this);
         }
     }
 

@@ -21,10 +21,10 @@ public class Window extends JFrame {
         MapPanel mapPanel = new MapPanel(width, height);
         add(mapPanel);
 
+        Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
+        setLocation(screenDim.width/2 - getSize().width/2, screenDim.height/2 - getSize().height/2);
+
         setResizable(false);
         setVisible(true);
-
-//        Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
-//        setLocation(screenDim.width/2 - getSize().width/2, screenDim.height/2 - getSize().height/2);
     }
 }
