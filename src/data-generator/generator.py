@@ -18,7 +18,11 @@ def generate_area():
     y = 100 * rnd.random() - 50
     w = 1.2 * rnd.random() + 1
     h = 1.2 * rnd.random() + 1
-    return [[x, y], [x+w, y], [x+w, y+h], [x, y+h]], (x, y, w, h)
+    #return [[x, y], [x+w, y], [x+w, y+h], [x, y+h]], (x, y, w, h)
+    return [[20, 20], [22, 20], [22, 22], [24, 22], [24, 23], [23, 23], [23, 24], [20, 24]], (20, 20, 4, 4)
+
+
+
 
 def generate_sensors(size, x, y, w, h):
     res = []
@@ -81,8 +85,8 @@ def add_data_db(username: str, password: str, db: str):
 
 
 if __name__ == "__main__":
-    size = 5
-    farmer_names = [str(i) for i in range(1, size+1)]
+    size = 2
+    farmer_names = [str(i) for i in range(6, size+6)]
     add_data_db(*creds.credentials, 'atlas')
 
 

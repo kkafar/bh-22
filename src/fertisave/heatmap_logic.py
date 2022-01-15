@@ -67,6 +67,8 @@ class CreateHeatmap:
                 continue
             if x < a[0] and x < b[0]:
                 continue
+            if a[0] == b[0]:
+                continue
             y_prim = x * (a[1] - b[1]) / (a[0] - b[0]) + a[1] - a[0] * (a[1] - b[1]) / (a[0] - b[0])
             if y_prim >= y:
                 count += 1
@@ -106,11 +108,11 @@ class CreateHeatmap:
 if __name__ == '__main__':
     weather_provider = wi.WeatherInfoProvider()
     map_info_provider = mi.MapInfoProvider()
-    map_info = map_info_provider.get_info(str(1), str(1))
+    map_info = map_info_provider.get_info(str(6), str(1))
     weather_info = weather_provider.get_info(map_info['vertices'][0])
-    ch = CreateHeatmap(100, map_info | weather_info)
+    ch = CreateHeatmap(30, map_info | weather_info)
     heatmap, _ = ch.generate_heatmap()
-    for i in range (10):
-        for j in range (10):
+    for i in range (30):
+        for j in range (30):
             print (int(heatmap[i, j]), end="  ")
         print (" ")
