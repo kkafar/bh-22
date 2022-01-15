@@ -13,4 +13,6 @@
 # pycache 
 __pycache__/
 
+# intellij
 out/
+.idea/
