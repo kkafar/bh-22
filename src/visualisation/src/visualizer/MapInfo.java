@@ -1,14 +1,16 @@
 package visualizer;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class MapInfo {
 
@@ -20,6 +22,8 @@ public class MapInfo {
 
     private final int clientID = 1;
     private final int mapID = 1;
+
+    private final Gson gson = new Gson();
 
     public MapInfo() {
 
@@ -58,7 +62,10 @@ public class MapInfo {
         }
 
         byte[] bytes = http.getInputStream().readAllBytes();
-        System.out.println(new String(bytes, StandardCharsets.UTF_8));
+        String response = new String(bytes, StandardCharsets.UTF_8);
+
+        ResponseJson responseJson = gson.fromJson(response, ResponseJson.class);
+        System.out.println(responseJson.data);
     }
 
     public Point translate(Point point, int mapWidth, int mapHeight){
