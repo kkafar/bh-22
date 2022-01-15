@@ -23,8 +23,8 @@ public class MapPanel extends JPanel implements ActionListener {
     private boolean heatMapShowing = false;
 
     private final MapInfo mapInfo = new MapInfo();
-    private final int[][] heatMap = mapInfo.getHeatMap();
-    private int maxValue;
+    private final double[][] heatMap = mapInfo.getHeatMap();
+    private double maxValue;
     private final ArrayList<Point> sensors;
 
     public MapPanel(int width, int height){
@@ -86,13 +86,13 @@ public class MapPanel extends JPanel implements ActionListener {
                     g2D.fillRect(j * squareWidth, i * squareHeight, squareWidth, squareHeight);
                 }
             }
-        }
-
-        // grid
-        g2D.setPaint(new Color(225, 217, 217));
-        for (int i = 0; i < heatMap.length; i++){
-            for (int j = 0; j < heatMap[0].length; j++){
-                g2D.drawRect(j*squareWidth, i*squareHeight, squareWidth, squareHeight);
+        } else {
+            // grid
+            g2D.setPaint(new Color(225, 217, 217));
+            for (int i = 0; i < heatMap.length; i++) {
+                for (int j = 0; j < heatMap[0].length; j++) {
+                    g2D.drawRect(j * squareWidth, i * squareHeight, squareWidth, squareHeight);
+                }
             }
         }
 
@@ -109,9 +109,7 @@ public class MapPanel extends JPanel implements ActionListener {
         }
     }
 
-    private Color getHeatHue(int value){
-        Color color = Color.getHSBColor(225, (float)value/(float)maxValue*100, 100);
-        System.out.println(color);
+    private Color getHeatHue(double value){
         return Color.getHSBColor((float)(225./360.), (float)value/(float)maxValue, 1);
     }
 

@@ -1,13 +1,21 @@
 package visualizer;
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.*;
+import java.net.http.HttpClient;
+import java.nio.charset.StandardCharsets;
+
 
 public class Window extends JFrame {
 
     public final int width = 1000;
     public final int height = 800;
 
-    public static void main(String[]  args){
+    public static void main(String[]  args) {
         new Window();
     }
 
