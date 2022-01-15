@@ -1,0 +1,11 @@
+# local files
+*local.*
+
+# MacOS specific files
+.DS_Store
+
+# Python virtual environment
+.venv/
+
+# vscode settings
+.vscode/
