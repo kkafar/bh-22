@@ -20,3 +20,4 @@
 
 * tablica 2D wartości (-1 oznacza że kwadrat nie należy do pola, a tak floaty jako poziom natężenia środku)
 * komunikat czy nawozić
+* lewydolny i prawygórny róg w współrzędnych
