@@ -20,7 +20,7 @@ public class MapInfo {
     private double [][] map;
     private ArrayList<Point> sensors = new ArrayList<>();
 
-    private final int clientID = 1;
+    private final int clientID = 6;
     private final int mapID = 1;
 
     private final Gson gson = new Gson();
