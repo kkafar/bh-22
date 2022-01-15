@@ -10,24 +10,12 @@ import numpy as np
 # -1 - nie leży w polu
 
 
-class GetData:
-    def __init__(self, id):
-        self.id = id
-
-    def get(self):
-        data = {}
-        data['map'] = np.array([[0, 0], [20, 0], [30, 30], [0, 30]])
-        data['sensors'] = np.array([[5, 5, 5], [10, 5, 6], [20, 20, 10], [5, 10, 3]])
-        data['wind'] = [0, 0]
-        data['rain'] = 20
-        return data
-
 
 class Map:
     def __init__(self, vertices):
-        self.vertices = vertices
-        left_down = (min(vertices[:, 0]), min(vertices[:, 1]))
-        right_up = (max(vertices[:, 0]), max(vertices[:, 1]))
+        self.vertices = np.array(vertices)
+        left_down = (min(self.vertices[:, 0]), min(self.vertices[:, 1]))
+        right_up = (max(self.vertices[:, 0]), max(self.vertices[:, 1]))
         self.rectangle = (left_down, right_up)
 
     def get_width(self):
@@ -38,15 +26,14 @@ class Map:
 
 
 class CreateHeatmap:
-    def __init__(self, size):
-        source = GetData(5)
-        self.data = source.get() #zwraca słownik z danymi
+    def __init__(self, size, data):
+        self.data = data #zwraca słownik z danymi
         if isinstance(size, int):
             size = (size, size)
         self.size = size
         self.heatmap = np.zeros(size)
         self.sensors_value = np.zeros(size)
-        self.map = Map(self.data['map'])
+        self.map = Map(self.data['vertices'])
 
     def weight(self, point_a, point_b):
         return 1 / np.sqrt((point_a[0] - point_b[0])**2 + (point_a[1] - point_b[1])**2)
@@ -60,7 +47,7 @@ class CreateHeatmap:
                 value = 0
                 weights_sum = 0
                 point = ((i+0.5) * width_area, (j+0.5) * height_area)
-                for coor_x, coor_y, v in self.data['sensors']:
+                for (coor_x, coor_y), v in zip(self.data['sensors'], self.data['readings']):
                     w = self.weight(point, (coor_x, coor_y))
                     weights_sum += w
                     value += v * w
@@ -86,17 +73,17 @@ class CreateHeatmap:
         for i in range(self.size[0]):
             for j in range(self.size[1]):
                 self.heatmap[i, j] = self.function(self.sensors_value[i, j])
-        vector_wind = self.data['wind']
-        u = np.sign(vector_wind[0])
-        v = np.sign(vector_wind[1])
+        wind_vector = self.data['wind_vector']
+        u = int(np.sign(wind_vector[0]))
+        v = int(np.sign(wind_vector[1]))
         for i in range(self.size[0]):
             for j in range(self.size[1]):
                 if u and i+u >= 0 and i+u < self.size[0]:
-                    self.heatmap[i+u, j] -= self.heatmap[i, j] * vector_wind[0] / 100
-                    self.heatmap[i, j] += self.heatmap[i, j] * vector_wind[0] / 100
+                    self.heatmap[i+u, j] -= self.heatmap[i, j] * wind_vector[0] / 100
+                    self.heatmap[i, j] += self.heatmap[i, j] * wind_vector[0] / 100
                 if v and j+v >= 0 and j+v < self.size[1]:
-                    self.heatmap[i, j+v] -= self.heatmap[i, j] * vector_wind[0] / 100
-                    self.heatmap[i, j] += self.heatmap[i, j] * vector_wind[0] / 100
+                    self.heatmap[i, j+v] -= self.heatmap[i, j] * wind_vector[1] / 100
+                    self.heatmap[i, j] += self.heatmap[i, j] * wind_vector[1] / 100
         self.heatmap[self.heatmap > 100] = 100
         left_down, right_up = self.map.rectangle
         width_area = (right_up[0] - left_down[0]) / self.size[0]
@@ -111,7 +98,7 @@ class CreateHeatmap:
     def generate_heatmap(self):
         self.read_sensors()
         self.calculate_heatmap()
-        return self.heatmap
+        return self.heatmap, self.map.rectangle
 
 if __name__ == '__main__':
     ch = CreateHeatmap(10)
