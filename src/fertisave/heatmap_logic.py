@@ -4,16 +4,6 @@ import weatherinfo as wi
 import mapinfo as mi
 
 
-#data - słownik:
-# 'map' - lista wierzchołków
-# 'sensors' - lista czujników i każdy czujnik to współrzędna x i y oraz wartość czujnika
-# 'wind' - (siła, kierunek)
-# 'rain' - siła
-
-# -1 - nie leży w polu
-
-
-
 class Map:
     def __init__(self, vertices):
         self.vertices = np.array(vertices)
@@ -57,7 +47,7 @@ class CreateHeatmap:
                 self.sensors_value[i, j] = value / weights_sum
 
     def function(self, k):
-        return min(k**2 / 30, 100)
+        return min(k**3 / 300, 100)
 
     def point_in_area(self, x, y):
         count = 0
@@ -68,6 +58,8 @@ class CreateHeatmap:
             if x < a[0] and x < b[0]:
                 continue
             if a[0] == b[0]:
+                if a[0] == x:
+                    count += 1
                 continue
             y_prim = x * (a[1] - b[1]) / (a[0] - b[0]) + a[1] - a[0] * (a[1] - b[1]) / (a[0] - b[0])
             if y_prim >= y:
@@ -89,6 +81,8 @@ class CreateHeatmap:
                 if v and j+v >= 0 and j+v < self.size[1]:
                     self.heatmap[i, j+v] -= self.heatmap[i, j] * wind_vector[1] / 100
                     self.heatmap[i, j] += self.heatmap[i, j] * wind_vector[1] / 100
+        if self.data['rain']:
+            self.heatmap *= 1.2
         self.heatmap[self.heatmap > 100] = 100
         left_down, right_up = self.map.rectangle
         width_area = (right_up[0] - left_down[0]) / self.size[0]

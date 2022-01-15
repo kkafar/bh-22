@@ -5,16 +5,19 @@ from collections import namedtuple
 def weather_info_factory(
     temperature: float,
     season: str,
-    wind_vector: tuple
-): 
+    wind_vector: tuple,
+    rain: int
+):
     assert isinstance(temperature, float)
     assert isinstance(season, str)
     assert isinstance(wind_vector, tuple) and len(wind_vector) == 2
+    assert isinstance(rain, int)
 
     return {
         'temperature': temperature,
         'season': season,
         'wind_vector': wind_vector,
+        'rain': rain
     }
 
 
@@ -27,7 +30,8 @@ class WeatherInfoProvider(object):
         return weather_info_factory(
             self._get_temperature_for(location),
             self._get_season(location),
-            self._get_wind_info(location)
+            self._get_wind_info(location),
+            self._get_rain_info(location)
         )
         
     
@@ -43,4 +47,10 @@ class WeatherInfoProvider(object):
 
     def _get_wind_info(self, location: tuple) -> tuple:
         # odwołanie do jakiegoś api pogodowego
-        return random.random(), random.random() 
+        return random.random(), random.random()
+
+    def _get_rain_info(self, location: tuple) -> tuple:
+        # odwołanie do jakiegoś api pogodowego
+        return int(random.random() > 0.7)
+
+
