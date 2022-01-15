@@ -10,11 +10,11 @@ import java.util.ArrayList;
 
 public class MapPanel extends JPanel implements ActionListener {
 
-    private final int width;
-    private final int height;
+    public final int width;
+    public final int height;
 
-    private int squareWidth;
-    private int squareHeight;
+    private final int squareWidth;
+    private final int squareHeight;
 
     private final int tractorSize = 50;
     private final Image tractorImage = new ImageIcon("pics/tractor.png").getImage().getScaledInstance(tractorSize, tractorSize, Image.SCALE_DEFAULT);
@@ -25,9 +25,9 @@ public class MapPanel extends JPanel implements ActionListener {
     private final MapInfo mapInfo = new MapInfo();
     private final int[][] heatMap = mapInfo.getHeatMap();
     private int maxValue;
+    private final ArrayList<Point> sensors;
 
     public MapPanel(int width, int height){
-
         this.width = width;
         this.height = height;
 
@@ -41,6 +41,8 @@ public class MapPanel extends JPanel implements ActionListener {
                 maxValue = Math.max(maxValue, heatMap[i][j]);
             }
         }
+
+        sensors = mapInfo.translate(mapInfo.getSensors(), width, height);
 
         setBounds(0, 0, width, height);
         setPreferredSize(new Dimension(width, height));
@@ -96,13 +98,12 @@ public class MapPanel extends JPanel implements ActionListener {
 
         // sensors
         g2D.setPaint(new Color(21, 36, 143));
-        ArrayList<Point> sensors = mapInfo.getSensors();
         for (Point sensor: sensors){
             g2D.fillOval((int)sensor.x, (int)sensor.y, 12, 12);
         }
 
         //tractor
-        Point tractorPos = mapInfo.getTractorPosition();
+        Point tractorPos = mapInfo.translate(mapInfo.getTractorPosition(), width, height);
         if (tractorPos != null){
             g2D.drawImage(tractorImage, (int)(tractorPos.x - tractorSize/2), (int)(tractorPos.y - tractorSize/2), tractorSize, tractorSize, null,this);
         }

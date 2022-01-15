@@ -15,8 +15,8 @@ public class Window extends JFrame {
         setTitle("Fertisave");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(null);
-        setBounds(0, 0, width, height);
-        setPreferredSize(new Dimension(width, height));
+        setBounds(0, 0, width, height+50);
+        setPreferredSize(new Dimension(width, height+50));
 
         MapPanel mapPanel = new MapPanel(width, height);
         add(mapPanel);
