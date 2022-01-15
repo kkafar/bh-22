@@ -5,7 +5,7 @@ import java.awt.*;
 public class Window extends JFrame {
 
     public final int width = 1000;
-    public final int height = 600;
+    public final int height = 800;
 
     public static void main(String[]  args){
         new Window();
@@ -14,12 +14,18 @@ public class Window extends JFrame {
     public Window() {
         setTitle("Fertisave");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setLayout(null);
+        setLayout(new FlowLayout());
+
         setBounds(0, 0, width, height+50);
         setPreferredSize(new Dimension(width, height+50));
 
-        MapPanel mapPanel = new MapPanel(width, height);
+        MapPanel mapPanel = new MapPanel(width, 3*height/4);
         add(mapPanel);
+
+        JetPanel jetPanel = new JetPanel(width, height/4);
+        add(jetPanel);
+
+        pack();
 
         Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation(screenDim.width/2 - getSize().width/2, screenDim.height/2 - getSize().height/2);
