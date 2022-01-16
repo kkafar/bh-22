@@ -1,17 +1,11 @@
 package visualizer;
+
 import data.DatabaseMetadata;
 import data.MapInfoProvider;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.*;
-import java.net.http.HttpClient;
-import java.nio.charset.StandardCharsets;
-
 
 public class Window extends JFrame {
 
