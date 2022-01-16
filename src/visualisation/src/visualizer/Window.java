@@ -16,7 +16,7 @@ import java.nio.charset.StandardCharsets;
 public class Window extends JFrame {
 
     public final int width = 1000;
-    public final int height = 800;
+    public final int height = 600;
 
     private final static int clientId = 6;
     private final static int mapId = 1;
