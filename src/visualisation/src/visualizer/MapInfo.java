@@ -1,13 +1,6 @@
 package visualizer;
 
-import com.google.gson.Gson;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 
@@ -15,13 +8,11 @@ public class MapInfo {
     private final Point upperRight;
     private final Point lowerLeft;
 
-    private URL url;
     private double [][] heatMap;
     private ArrayList<Point> sensors = new ArrayList<>();
 
     private final int clientId;
     private final int mapId;
-
 
     public MapInfo(
         double[][] heatMap,
@@ -72,6 +63,16 @@ public class MapInfo {
     }
 
     public Point getTractorPosition(){
-        return new Point(63, 45);
+        Point left = getLeftJetPosition();
+        Point right = getRightJetPosition();
+        return new Point((left.x + right.x)/2, (left.y+right.y)/2) ;
+    }
+
+    public Point getLeftJetPosition() {
+        return new Point(100, 45);
+    }
+
+    public Point getRightJetPosition() {
+        return new Point(150, 45);
     }
 }

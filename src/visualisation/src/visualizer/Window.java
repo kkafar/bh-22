@@ -4,13 +4,8 @@ import data.MapInfoProvider;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.*;
-import java.net.http.HttpClient;
-import java.nio.charset.StandardCharsets;
+
 
 
 public class Window extends JFrame {
@@ -18,7 +13,7 @@ public class Window extends JFrame {
     public final int width = 1000;
     public final int height = 600;
 
-    private final static int clientId = 6;
+    private final static int clientId = 18;
     private final static int mapId = 1;
 
     private final DatabaseMetadata dbMetadata;
@@ -40,10 +35,12 @@ public class Window extends JFrame {
         MapInfoProvider mapInfoProvider = new MapInfoProvider(dbMetadata);
         MapInfo mapInfo = mapInfoProvider.getInfo(clientId, mapId);
 
-        MapPanel mapPanel = new MapPanel(width, 3*height/4, mapInfo);
+        int mapPanelWidth = width;
+        int mapPanelHeight = 3*height/4;
+        MapPanel mapPanel = new MapPanel(mapPanelWidth, mapPanelHeight, mapInfo);
         add(mapPanel);
 
-        JetPanel jetPanel = new JetPanel(width, height/4, mapInfo);
+        JetPanel jetPanel = new JetPanel(width, height/4, mapPanelWidth, mapPanelHeight, mapInfo);
         add(jetPanel);
 
         pack();
