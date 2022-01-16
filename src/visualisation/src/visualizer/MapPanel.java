@@ -1,5 +1,7 @@
 package visualizer;
 
+import data.MapInfoProvider;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -22,14 +24,16 @@ public class MapPanel extends JPanel implements ActionListener {
     private final Timer timer;
     private boolean heatMapShowing = false;
 
-    private final MapInfo mapInfo = new MapInfo();
-    private final double[][] heatMap = mapInfo.getHeatMap();
+    private final MapInfo mapInfo;
+    private final double[][] heatMap;
     private double maxValue;
     private final ArrayList<Point> sensors;
 
-    public MapPanel(int width, int height){
+    public MapPanel(int width, int height, MapInfo mapInfo){
+        this.mapInfo = mapInfo;
         this.width = width;
         this.height = height;
+        this.heatMap = mapInfo.getHeatMap();
 
         squareHeight = height/heatMap.length;
         squareWidth = width/heatMap[0].length;
