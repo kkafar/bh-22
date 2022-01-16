@@ -16,6 +16,9 @@
 * MongoDB
 * Java (Swing, Gson)
 
+## Architektura
+![arch](/pics/arch.png)
+
 ## Ilość środka w funkcji zmierzonych parametrów
 * dobranie odpowiedniej zależności funkcyjnej do znalezienia heatmapy
 * parametry: ilość konkretnego szkodnika w jednostce czasu, opady, pora roku (etap rozwoju szkodnika, etap rozwoju uprawy), kierunek i siła wiatru (proces oprysku)
@@ -41,11 +44,16 @@ kontakt z systemem GPS
 * obecnie, głównie mock (generowane dane)
 * docelowo odczyty z rzeczywistych czujników, zapytania do API pogodowego, bazy danych pestycydów
 
+## Wizualizacja
+![wiz1](pics/wiz1.png)
+![wiz2](pics/wiz2.png)
+
 ## Kierunki rozwoju
 * zwiększenie liczby parametrów funkcji (pestycydy, koszty, inne parametry atmosferyczne)
 * wyznaczanie oceny obecnej sytuacji na obszarze na podstawie zmian w pomiarach na przestrzeni czasu do oceny korzyści płynących ze sterownika i w celu modyfikacji parametrów funkcji
 * skonstruowanie bardziej zaawansowanych algorytmów optymalizacji i/lub zaadoptowanie metod sztucznej inteligencji / ML
 * system wyznaczania optymalnej trasy oraz sugerowania korzystnych dni oprysków (wpływ pogody, pory roku, innych przesłanek)
+
 
 
 
