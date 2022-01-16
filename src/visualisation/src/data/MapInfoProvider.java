@@ -6,11 +6,8 @@ import visualizer.ResponseJson;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
-import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 
 import com.google.gson.Gson;
 
