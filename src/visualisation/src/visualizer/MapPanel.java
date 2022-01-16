@@ -1,7 +1,5 @@
 package visualizer;
 
-import data.MapInfoProvider;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -107,7 +105,7 @@ public class MapPanel extends JPanel implements ActionListener {
         }
 
         //tractor
-        Point tractorPos = mapInfo.translate(mapInfo.getTractorPosition(), width, height);
+        Point tractorPos = mapInfo.getTractorPosition();
         if (tractorPos != null){
             g2D.drawImage(tractorImage, (int)(tractorPos.x - tractorSize/2), (int)(tractorPos.y - tractorSize/2), tractorSize, tractorSize, null,this);
         }
