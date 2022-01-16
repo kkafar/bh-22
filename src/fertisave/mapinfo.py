@@ -33,7 +33,7 @@ class MapInfoProvider(object):
         # implementującego logikę biznesową
         url_provider = get_atlas_db_url
         db_client = pymongo.MongoClient(url_provider(*creds.credentials), tlsCAFile=certifi.where())
-        db = db_client.get_database(name='Production')
+        db = db_client.get_database(name='Productionv2')
         collection = db[str(clientId)]
         data = collection.find_one({'name': str(mapId)})
         dates = [datetime.datetime.strptime(element['date'], '%Y-%m-%d %H:%M:%S') for element in data['readings']]

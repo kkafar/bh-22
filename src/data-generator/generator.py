@@ -74,14 +74,14 @@ def add_data_db(username: str, password: str, db: str):
     db_client = pymongo.MongoClient(url_provider(username, password), tlsCAFile=certifi.where())
 
     print("Acquire test database")
-    db = db_client.get_database(name='Production')
+    db = db_client.get_database(name='Productionv2')
     print("Database names")
     print(db.name)
 
     for name_farmer in farmer_names:
         collection = db[name_farmer]
         count_area = rnd.randint(3, 7)
-        data = generate_one_document(count_area, 15, name_farmer == '6')
+        data = generate_one_document(count_area, 15, name_farmer == '6' or name_farmer == '4')
         print("Attempting massive insertion")
         print (data)
         collection.insert_many(data)
