@@ -8,7 +8,8 @@ public class DatabaseMetadata {
 
   public DatabaseMetadata() {
 //    this.dbAddress = "http://10.230.128.212:5000";
-    this.dbAddress = "http://192.168.0.234:5000";
+    this.dbAddress = "http://10.230.120.200:5000";
+//    this.dbAddress = "http://192.168.0.234:5000";
   }
 
   public URL getUrl() throws MalformedURLException {
