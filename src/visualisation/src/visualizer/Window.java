@@ -1,4 +1,7 @@
 package visualizer;
+import data.DatabaseMetadata;
+import data.MapInfoProvider;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
@@ -15,11 +18,18 @@ public class Window extends JFrame {
     public final int width = 1000;
     public final int height = 800;
 
-    public static void main(String[]  args) {
+    private final static int clientId = 6;
+    private final static int mapId = 1;
+
+    private final DatabaseMetadata dbMetadata;
+
+    public static void main(String[]  args) throws IOException {
         new Window();
     }
 
-    public Window() {
+    public Window() throws IOException {
+        dbMetadata = new DatabaseMetadata();
+
         setTitle("Fertisave");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
@@ -27,10 +37,13 @@ public class Window extends JFrame {
         setBounds(0, 0, width, height+50);
         setPreferredSize(new Dimension(width, height+50));
 
-        MapPanel mapPanel = new MapPanel(width, 3*height/4);
+        MapInfoProvider mapInfoProvider = new MapInfoProvider(dbMetadata);
+        MapInfo mapInfo = mapInfoProvider.getInfo(clientId, mapId);
+
+        MapPanel mapPanel = new MapPanel(width, 3*height/4, mapInfo);
         add(mapPanel);
 
-        JetPanel jetPanel = new JetPanel(width, height/4);
+        JetPanel jetPanel = new JetPanel(width, height/4, mapInfo);
         add(jetPanel);
 
         pack();

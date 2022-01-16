@@ -8,7 +8,7 @@ public class JetPanel extends JPanel {
     private final int width;
     private final int height;
 
-    public JetPanel(int width, int height){
+    public JetPanel(int width, int height, MapInfo mapInfo){
         this.width = width;
         this.height = height;
 
