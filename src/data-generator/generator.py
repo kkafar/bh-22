@@ -31,7 +31,7 @@ def generate_sensors(size, x, y, w, h, flag):
     t = w / size
     for i in range (size):
         X = t * rnd.random() + x + i*t
-        delta = h/2 * (size%2)
+        delta = h/2 * (i%2)
         Y = h * rnd.random() / 2 + y + delta
         res.append((X, Y))
     return res
@@ -74,7 +74,7 @@ def add_data_db(username: str, password: str, db: str):
     db_client = pymongo.MongoClient(url_provider(username, password), tlsCAFile=certifi.where())
 
     print("Acquire test database")
-    db = db_client.get_database(name='Productionv2')
+    db = db_client.get_database(name='Productionv3')
     print("Database names")
     print(db.name)
 
