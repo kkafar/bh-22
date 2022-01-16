@@ -27,11 +27,15 @@ public class MapPanel extends JPanel implements ActionListener {
     private double maxValue;
     private final ArrayList<Point> sensors;
 
-    public MapPanel(int width, int height, MapInfo mapInfo){
+    private final Tractor tractor;
+
+    public MapPanel(int width, int height, MapInfo mapInfo, Tractor tractor){
         this.mapInfo = mapInfo;
         this.width = width;
         this.height = height;
         this.heatMap = mapInfo.getHeatMap();
+
+        this.tractor = tractor;
 
         squareHeight = height/heatMap.length;
         squareWidth = width/heatMap[0].length;
@@ -105,7 +109,7 @@ public class MapPanel extends JPanel implements ActionListener {
         }
 
         //tractor
-        Point tractorPos = mapInfo.getTractorPosition();
+        Point tractorPos = tractor.getTractorPosition();
         if (tractorPos != null){
             g2D.drawImage(tractorImage, (int)(tractorPos.x - tractorSize/2), (int)(tractorPos.y - tractorSize/2), tractorSize, tractorSize, null,this);
         }

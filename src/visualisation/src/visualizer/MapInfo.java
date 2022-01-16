@@ -61,18 +61,4 @@ public class MapInfo {
     public double [][] getHeatMap(){
         return heatMap;
     }
-
-    public Point getTractorPosition(){
-        Point left = getLeftJetPosition();
-        Point right = getRightJetPosition();
-        return new Point((left.x + right.x)/2, (left.y+right.y)/2) ;
-    }
-
-    public Point getLeftJetPosition() {
-        return new Point(100, 45);
-    }
-
-    public Point getRightJetPosition() {
-        return new Point(150, 45);
-    }
 }

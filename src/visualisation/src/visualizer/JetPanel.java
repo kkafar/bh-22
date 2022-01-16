@@ -12,10 +12,11 @@ public class JetPanel extends JPanel {
     private final int mapPanelHeight;
 
     private final MapInfo mapInfo;
+    private final Tractor tractor;
 
     private final int jetCount = 5;
 
-    public JetPanel(int width, int height, int mapPanelWidth, int mapPanelHeight, MapInfo mapInfo){
+    public JetPanel(int width, int height, int mapPanelWidth, int mapPanelHeight, MapInfo mapInfo, Tractor tractor){
         this.width = width;
         this.height = height;
 
@@ -23,6 +24,7 @@ public class JetPanel extends JPanel {
         this.mapPanelWidth = mapPanelWidth;
 
         this.mapInfo = mapInfo;
+        this.tractor = tractor;
 
         setBounds(0, 0, width, height);
         setPreferredSize(new Dimension(width, height));
@@ -55,8 +57,8 @@ public class JetPanel extends JPanel {
 
     private double[] getJetValues(){
         double [][] heatMap = mapInfo.getHeatMap();
-        Point leftJetPosition = mapInfo.getLeftJetPosition();
-        Point rightJetPosition = mapInfo.getRightJetPosition();
+        Point leftJetPosition = tractor.getLeftJetPosition();
+        Point rightJetPosition = tractor.getRightJetPosition();
 
         double jetWidth = (rightJetPosition.x - leftJetPosition.x)/jetCount;
         double jetHeight = (rightJetPosition.y - leftJetPosition.y)/jetCount;
@@ -73,6 +75,6 @@ public class JetPanel extends JPanel {
         int i = (int)(jetPos.x/mapPanelWidth*heatMap[0].length);
         int j = (int)(jetPos.y/mapPanelHeight*heatMap.length);
 
-        return heatMap[j][i];
+        return heatMap[j][i] == -1 ? 0 : heatMap[j][i];
     }
 }

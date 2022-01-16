@@ -37,10 +37,12 @@ public class Window extends JFrame {
 
         int mapPanelWidth = width;
         int mapPanelHeight = 3*height/4;
-        MapPanel mapPanel = new MapPanel(mapPanelWidth, mapPanelHeight, mapInfo);
+
+        Tractor tractor = new Tractor(mapPanelWidth, mapPanelHeight);
+        MapPanel mapPanel = new MapPanel(mapPanelWidth, mapPanelHeight, mapInfo, tractor);
         add(mapPanel);
 
-        JetPanel jetPanel = new JetPanel(width, height/4, mapPanelWidth, mapPanelHeight, mapInfo);
+        JetPanel jetPanel = new JetPanel(width, height/4, mapPanelWidth, mapPanelHeight, mapInfo, tractor);
         add(jetPanel);
 
         pack();
