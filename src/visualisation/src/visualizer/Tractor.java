@@ -43,9 +43,6 @@ public class Tractor {
     }
 
     public Point getRightJetPosition() {
-        Point pos = rightPos;
-        move();
-
-        return pos;
+        return rightPos;
     }
 }

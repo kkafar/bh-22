@@ -110,6 +110,7 @@ public class MapPanel extends JPanel implements ActionListener {
 
         //tractor
         Point tractorPos = tractor.getTractorPosition();
+        tractor.move();
         if (tractorPos != null){
             g2D.drawImage(tractorImage, (int)(tractorPos.x - tractorSize/2), (int)(tractorPos.y - tractorSize/2), tractorSize, tractorSize, null,this);
         }

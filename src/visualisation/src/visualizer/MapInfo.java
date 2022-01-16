@@ -9,7 +9,7 @@ public class MapInfo {
     private final Point lowerLeft;
 
     private double [][] heatMap;
-    private ArrayList<Point> sensors = new ArrayList<>();
+    private ArrayList<Point> sensors;
 
     private final int clientId;
     private final int mapId;
