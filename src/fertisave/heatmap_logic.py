@@ -97,7 +97,7 @@ class CreateHeatmap:
     def generate_heatmap(self):
         self.read_sensors()
         self.calculate_heatmap()
-        return self.heatmap, self.map.rectangle
+        return self.heatmap.T, self.map.rectangle
 
 if __name__ == '__main__':
     weather_provider = wi.WeatherInfoProvider()
